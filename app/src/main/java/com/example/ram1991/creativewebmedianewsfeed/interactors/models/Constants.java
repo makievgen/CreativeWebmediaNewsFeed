@@ -11,5 +11,4 @@ public final class Constants {
     public static final String URL = "URL";
     public static final String BASE_URL = "http://timesofindia.indiatimes.com/";
 
-
 }
