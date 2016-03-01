@@ -108,7 +108,6 @@ public class NewsActivity extends BaseActivity implements NewsViewer, OnNewsClic
     public void onClick(Bundle bundle) {
         Intent intent = new Intent(this, DetailedNewsActivity.class);
         intent.putExtra(Constants.WEB_URL, bundle);
-        //intent.putExtras(bundle);
         startActivity(intent);
     }
 }
