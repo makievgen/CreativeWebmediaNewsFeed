@@ -9,19 +9,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ram1991.creativewebmedianewsfeed.R;
-import com.example.ram1991.creativewebmedianewsfeed.ui.views.NewsViewer;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.Constants;
+import com.example.ram1991.creativewebmedianewsfeed.ui.OnNewsClickListener;
 
 import java.util.List;
 import java.util.Map;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
-    NewsViewer viewer;
+    OnNewsClickListener listener;
     List<Map<String, String>> newsList;
 
-    public NewsRecyclerAdapter(NewsViewer viewer, List<Map<String, String>> list) {
-        this.viewer = viewer;
-        this.newsList = list;
 
+    public NewsRecyclerAdapter(OnNewsClickListener listener, List<Map<String, String>> list) {
+        this.listener = listener;
+        this.newsList = list;
     }
 
     public void setData(List<Map<String, String>> newsList) {
@@ -39,9 +40,9 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Bundle bundle = new Bundle();
-        holder.headLine.setText(newsList.get(position).get("headLine"));
-        holder.dataLine.setText(newsList.get(position).get("dateLine"));
-        bundle.putString("URL", newsList.get(position).get("WebURL"));
+        holder.headLine.setText(newsList.get(position).get(Constants.HEAD_LINE));
+        holder.dataLine.setText(newsList.get(position).get(Constants.DATE_LINE));
+        bundle.putString(Constants.URL, newsList.get(position).get(Constants.WEB_URL));
         holder.card_view.setTag(bundle);
 
     }
@@ -65,7 +66,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = (Bundle) v.getTag();
-                    viewer.showDetailedInfo(bundle);
+                    listener.onClick(bundle);
                 }
             });
         }

@@ -1,13 +1,12 @@
 package com.example.ram1991.creativewebmedianewsfeed.presenters;
 
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.News;
-
-import retrofit2.Response;
+import java.util.List;
+import java.util.Map;
 
 public interface NewsPresenter {
     void sendRequest();
 
-    void onNetworkSuccess(Response<News> response);
+    void onNetworkSuccess(List<Map<String, String>> newsList);
 
     void onNetworkFailure();
 }

@@ -1,6 +1,6 @@
 package com.example.ram1991.creativewebmedianewsfeed.presenters;
 
-import com.example.ram1991.creativewebmedianewsfeed.ui.views.DetailedNewsViewer;
+import com.example.ram1991.creativewebmedianewsfeed.views.DetailedNewsViewer;
 
 public class DetailedNewsPresenterImpl implements DetailedNewsPresenter {
     DetailedNewsViewer detailedNewsViewer;

@@ -5,9 +5,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.ram1991.creativewebmedianewsfeed.R;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.Constants;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.DetailedNewsPresenter;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.DetailedNewsPresenterImpl;
-import com.example.ram1991.creativewebmedianewsfeed.ui.views.DetailedNewsViewer;
+import com.example.ram1991.creativewebmedianewsfeed.views.DetailedNewsViewer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,9 +36,10 @@ public class DetailedNewsActivity extends BaseActivity implements DetailedNewsVi
 
     @Override
     public void showWebPage() {
-        Bundle bundle = getIntent().getBundleExtra("WebURL");
-        if (bundle != null) {
-            webView.loadUrl(bundle.get("URL").toString());
+        Bundle bundle = getIntent().getBundleExtra(Constants.WEB_URL);
+        if (getIntent().getBundleExtra(Constants.WEB_URL) != null){
+            String url = bundle.getString(Constants.URL);
+            webView.loadUrl(url);
         }
     }
 }

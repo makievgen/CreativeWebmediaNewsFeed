@@ -2,10 +2,10 @@ package com.example.ram1991.creativewebmedianewsfeed.presenters;
 
 import com.example.ram1991.creativewebmedianewsfeed.interactors.NewsInteractor;
 import com.example.ram1991.creativewebmedianewsfeed.interactors.NewsInteractorImpl;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.News;
-import com.example.ram1991.creativewebmedianewsfeed.ui.views.NewsViewer;
+import com.example.ram1991.creativewebmedianewsfeed.views.NewsViewer;
 
-import retrofit2.Response;
+import java.util.List;
+import java.util.Map;
 
 public class NewsPresenterImpl implements NewsPresenter {
     NewsViewer newsViewer;
@@ -22,8 +22,8 @@ public class NewsPresenterImpl implements NewsPresenter {
     }
 
     @Override
-    public void onNetworkSuccess(Response<News> response) {
-        newsViewer.setData(response);
+    public void onNetworkSuccess(List<Map<String, String>> newsList) {
+        newsViewer.showFeedNews(newsList);
     }
 
     @Override

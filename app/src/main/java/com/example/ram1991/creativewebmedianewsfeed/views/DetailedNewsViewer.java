@@ -1,4 +1,4 @@
-package com.example.ram1991.creativewebmedianewsfeed.ui.views;
+package com.example.ram1991.creativewebmedianewsfeed.views;
 
 public interface DetailedNewsViewer {
     void showWebPage();
