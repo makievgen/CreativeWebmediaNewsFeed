@@ -23,7 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class NewsActivity extends BaseActivity implements NewsViewer, NewsRecyclerAdapter.OnNewsClickListener {
-    NewsPresenter mPresenter;
+    private NewsPresenter mPresenter;
     @Bind(R.id.rv_news)
     RecyclerView mRecyclerView;
     @Bind(R.id.swipeContainer)
@@ -77,14 +77,14 @@ public class NewsActivity extends BaseActivity implements NewsViewer, NewsRecycl
 
     @Override
     public void showError() {
-        mSwipeRefreshLayout.postDelayed(new Runnable() {
+        mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 if (mSwipeRefreshLayout.isRefreshing()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
-        }, 3000);
+        });
 
         Snackbar.make(mCoordinatorLayoutView, R.string.text_check_internet_connection, Snackbar.LENGTH_LONG)
                 .show();
