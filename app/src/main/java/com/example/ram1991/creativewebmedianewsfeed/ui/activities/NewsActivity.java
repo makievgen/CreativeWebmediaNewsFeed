@@ -1,6 +1,5 @@
 package com.example.ram1991.creativewebmedianewsfeed.ui.activities;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -10,10 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.ram1991.creativewebmedianewsfeed.R;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.Constants;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.Constants;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.NewsPresenter;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.NewsPresenterImpl;
-import com.example.ram1991.creativewebmedianewsfeed.ui.OnNewsClickListener;
 import com.example.ram1991.creativewebmedianewsfeed.ui.adapters.NewsRecyclerAdapter;
 import com.example.ram1991.creativewebmedianewsfeed.views.NewsViewer;
 
@@ -24,18 +22,16 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class NewsActivity extends BaseActivity implements NewsViewer, OnNewsClickListener {
-    NewsPresenter presenter;
+public class NewsActivity extends BaseActivity implements NewsViewer, NewsRecyclerAdapter.OnNewsClickListener {
+    NewsPresenter mPresenter;
     @Bind(R.id.rv_news)
-    RecyclerView recyclerView;
+    RecyclerView mRecyclerView;
     @Bind(R.id.swipeContainer)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.snackbarInternetInfo)
-    View coordinatorLayoutView;
+    View mCoordinatorLayoutView;
 
-    FragmentManager fm;
-    LinearLayoutManager layoutManager;
-    NewsRecyclerAdapter adapter;
+    private NewsRecyclerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +39,15 @@ public class NewsActivity extends BaseActivity implements NewsViewer, OnNewsClic
         setContentView(R.layout.activity_news);
         ButterKnife.bind(this);
 
-        fm = getFragmentManager();
-        recyclerView.setHasFixedSize(false);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Map<String, String>> dummyList = new ArrayList<>();
-        adapter = new NewsRecyclerAdapter(this, dummyList);
-        recyclerView.setAdapter(adapter);
+        mAdapter = new NewsRecyclerAdapter(this, dummyList);
+        mRecyclerView.setAdapter(mAdapter);
 
-        presenter = new NewsPresenterImpl(this);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mPresenter = new NewsPresenterImpl(this);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 startRefresh();
@@ -64,50 +58,42 @@ public class NewsActivity extends BaseActivity implements NewsViewer, OnNewsClic
 
     @Override
     public void startRefresh() {
-
-        swipeRefreshLayout.post(new Runnable() {
+        mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                swipeRefreshLayout.setRefreshing(true);
+                mSwipeRefreshLayout.setRefreshing(true);
             }
         });
-
-        presenter.sendRequest();
+        mPresenter.sendRequest();
     }
 
     @Override
     public void showFeedNews(List<Map<String, String>> newsList) {
-        if (swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
         }
-        adapter.setData(newsList);
+        mAdapter.setData(newsList);
     }
 
     @Override
     public void showError() {
-        swipeRefreshLayout.postDelayed(new Runnable() {
+        mSwipeRefreshLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
         }, 3000);
 
-        Snackbar.make(coordinatorLayoutView, R.string.text_check_internet_connection, Snackbar.LENGTH_LONG)
-                .setAction(R.string.button_text_ok, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // nothing happens
-                    }
-                })
+        Snackbar.make(mCoordinatorLayoutView, R.string.text_check_internet_connection, Snackbar.LENGTH_LONG)
                 .show();
     }
 
     @Override
-    public void onClick(Bundle bundle) {
+    public void onClick(String webUrl) {
         Intent intent = new Intent(this, DetailedNewsActivity.class);
-        intent.putExtra(Constants.WEB_URL, bundle);
+        intent.putExtra(Constants.WEB_URL, webUrl);
         startActivity(intent);
     }
 }

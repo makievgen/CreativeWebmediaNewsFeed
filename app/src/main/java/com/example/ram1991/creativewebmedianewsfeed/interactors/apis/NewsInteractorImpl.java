@@ -1,8 +1,6 @@
-package com.example.ram1991.creativewebmedianewsfeed.interactors;
+package com.example.ram1991.creativewebmedianewsfeed.interactors.apis;
 
-import android.app.ListActivity;
-
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.Constants;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.Constants;
 import com.example.ram1991.creativewebmedianewsfeed.interactors.models.News;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.NewsPresenter;
 
@@ -14,27 +12,17 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
 
-public class NewsInteractorImpl extends ListActivity implements NewsInteractor, Callback<News> {
-    NewsPresenter newsPresenter;
+public class NewsInteractorImpl implements NewsInteractor, Callback<News> {
+    private NewsPresenter mNewsPresenter;
 
     public NewsInteractorImpl(NewsPresenter newsPresenter) {
-        this.newsPresenter = newsPresenter;
+        this.mNewsPresenter = newsPresenter;
     }
 
     @Override
     public void sendRequest() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        IndiaNewsAPI indiaNewsAPI = retrofit.create(IndiaNewsAPI.class);
-        Call<News> call = indiaNewsAPI.getListNews();
-        call.enqueue(this);
-
+        IndiaNewsAPI.Factory.getInstance().getListNews().enqueue(this);
     }
 
     @Override
@@ -50,21 +38,16 @@ public class NewsInteractorImpl extends ListActivity implements NewsInteractor, 
                 map.put(Constants.WEB_URL, response.body().getNewsItem().get(i).getWebURL());
                 newsList.add(map);
             }
-            newsPresenter.onNetworkSuccess(newsList);
+            mNewsPresenter.onNetworkSuccess(newsList);
 
         } else {
-            newsPresenter.onNetworkFailure();
+            mNewsPresenter.onNetworkFailure();
         }
     }
 
     @Override
     public void onFailure(Call<News> call, Throwable t) {
-        newsPresenter.onNetworkFailure();
-    }
-
-    public interface IndiaNewsAPI {
-        @GET("feeds/newsdefaultfeeds.cms?feedtype=sjson")
-        Call<News> getListNews();
+        mNewsPresenter.onNetworkFailure();
     }
 
 }

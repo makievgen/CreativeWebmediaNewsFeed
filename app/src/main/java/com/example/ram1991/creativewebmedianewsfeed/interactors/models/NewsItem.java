@@ -16,16 +16,27 @@ public class NewsItem {
     private String Related;
     private String ByLine;
 
-    public String getNewsItemId() {
+    public String getHeadLine() {
+        return HeadLine;
+    }
+
+    public String getDateLine() {
+        return DateLine;
+    }
+
+    public String getWebURL() {
+        return WebURL;
+    }
+
+/*
+   Unused mutators and accessors
+
+   public String getNewsItemId() {
         return NewsItemId;
     }
 
     public void setNewsItemId(String NewsItemId) {
         this.NewsItemId = NewsItemId;
-    }
-
-    public String getHeadLine() {
-        return HeadLine;
     }
 
     public void setHeadLine(String HeadLine) {
@@ -40,16 +51,8 @@ public class NewsItem {
         this.Agency = Agency;
     }
 
-    public String getDateLine() {
-        return DateLine;
-    }
-
     public void setDateLine(String DateLine) {
         this.DateLine = DateLine;
-    }
-
-    public String getWebURL() {
-        return WebURL;
     }
 
     public void setWebURL(String WebURL) {
@@ -111,5 +114,5 @@ public class NewsItem {
 
     public void setByLine(String ByLine) {
         this.ByLine = ByLine;
-    }
+    }*/
 }

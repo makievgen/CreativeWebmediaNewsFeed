@@ -10,6 +10,14 @@ public class News {
 
     private List<NewsItem> NewsItem = new ArrayList<>();
 
+    public List<NewsItem> getNewsItem() {
+        return NewsItem;
+    }
+
+
+/*
+    Unused mutators and accessors
+
     public Pagination getPagination() {
         return Pagination;
     }
@@ -18,12 +26,9 @@ public class News {
         this.Pagination = Pagination;
     }
 
-    public List<NewsItem> getNewsItem() {
-        return NewsItem;
-    }
-
     public void setNewsItem(List<NewsItem> NewsItem) {
         this.NewsItem = NewsItem;
     }
+*/
 
 }

@@ -1,34 +1,34 @@
 package com.example.ram1991.creativewebmedianewsfeed.presenters;
 
-import com.example.ram1991.creativewebmedianewsfeed.interactors.NewsInteractor;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.NewsInteractorImpl;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.apis.NewsInteractor;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.apis.NewsInteractorImpl;
 import com.example.ram1991.creativewebmedianewsfeed.views.NewsViewer;
 
 import java.util.List;
 import java.util.Map;
 
 public class NewsPresenterImpl implements NewsPresenter {
-    NewsViewer newsViewer;
-    NewsInteractor newsInteractorImpl;
+    private NewsViewer mNewsViewer;
+    private NewsInteractor mNewsInteractorImpl;
 
     public NewsPresenterImpl(NewsViewer newsViewer) {
-        this.newsViewer = newsViewer;
-        newsInteractorImpl = new NewsInteractorImpl(this);
+        this.mNewsViewer = newsViewer;
+        mNewsInteractorImpl = new NewsInteractorImpl(this);
     }
 
     @Override
     public void sendRequest() {
-        newsInteractorImpl.sendRequest();
+        mNewsInteractorImpl.sendRequest();
     }
 
     @Override
     public void onNetworkSuccess(List<Map<String, String>> newsList) {
-        newsViewer.showFeedNews(newsList);
+        mNewsViewer.showFeedNews(newsList);
     }
 
     @Override
     public void onNetworkFailure() {
-        newsViewer.showError();
+        mNewsViewer.showError();
     }
 
 }

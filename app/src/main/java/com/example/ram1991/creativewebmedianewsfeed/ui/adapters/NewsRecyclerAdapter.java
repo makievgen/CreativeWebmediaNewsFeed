@@ -1,6 +1,5 @@
 package com.example.ram1991.creativewebmedianewsfeed.ui.adapters;
 
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,24 +8,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ram1991.creativewebmedianewsfeed.R;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.Constants;
-import com.example.ram1991.creativewebmedianewsfeed.ui.OnNewsClickListener;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.Constants;
 
 import java.util.List;
 import java.util.Map;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
-    OnNewsClickListener listener;
-    List<Map<String, String>> newsList;
+    private OnNewsClickListener mListener;
+    private List<Map<String, String>> mNewsList;
 
 
-    public NewsRecyclerAdapter(OnNewsClickListener listener, List<Map<String, String>> list) {
-        this.listener = listener;
-        this.newsList = list;
+    public NewsRecyclerAdapter(NewsRecyclerAdapter.OnNewsClickListener listener, List<Map<String, String>> list) {
+        this.mListener = listener;
+        this.mNewsList = list;
     }
 
     public void setData(List<Map<String, String>> newsList) {
-        this.newsList = newsList;
+        this.mNewsList = newsList;
         notifyDataSetChanged();
     }
 
@@ -39,20 +37,19 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Bundle bundle = new Bundle();
-        holder.headLine.setText(newsList.get(position).get(Constants.HEAD_LINE));
-        holder.dataLine.setText(newsList.get(position).get(Constants.DATE_LINE));
-        bundle.putString(Constants.URL, newsList.get(position).get(Constants.WEB_URL));
-        holder.card_view.setTag(bundle);
+        holder.headLine.setText(mNewsList.get(position).get(Constants.HEAD_LINE));
+        holder.dataLine.setText(mNewsList.get(position).get(Constants.DATE_LINE));
+
+        holder.card_view.setTag(mNewsList.get(position).get(Constants.WEB_URL));
 
     }
 
     @Override
     public int getItemCount() {
-        return newsList.size();
+        return mNewsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         TextView headLine;
         TextView dataLine;
         CardView card_view;
@@ -65,12 +62,15 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle = (Bundle) v.getTag();
-                    listener.onClick(bundle);
+                    String webUrl = v.getTag().toString();
+                    mListener.onClick(webUrl);
                 }
             });
         }
     }
 
 
+    public interface OnNewsClickListener {
+        void onClick(String s);
+    }
 }

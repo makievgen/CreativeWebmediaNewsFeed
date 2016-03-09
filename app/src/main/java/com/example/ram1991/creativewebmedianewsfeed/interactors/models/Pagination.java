@@ -8,7 +8,11 @@ public class Pagination {
     private String PerPage;
     private String WebURL;
 
-    public String getTotalPages() {
+/*
+
+  Unused mutators and accessors
+
+  public String getTotalPages() {
         return TotalPages;
     }
 
@@ -39,6 +43,6 @@ public class Pagination {
 
     public void setWebURL(String WebURL) {
         this.WebURL = WebURL;
-    }
+    }*/
 
 }
