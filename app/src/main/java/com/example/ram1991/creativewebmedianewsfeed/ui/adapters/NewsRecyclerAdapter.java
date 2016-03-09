@@ -8,22 +8,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ram1991.creativewebmedianewsfeed.R;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.Constants;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsListItem;
 
 import java.util.List;
-import java.util.Map;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
     private OnNewsClickListener mListener;
-    private List<Map<String, String>> mNewsList;
+    private List<NewsListItem> mNewsList;
 
 
-    public NewsRecyclerAdapter(NewsRecyclerAdapter.OnNewsClickListener listener, List<Map<String, String>> list) {
+    public NewsRecyclerAdapter(List<NewsListItem> list, NewsRecyclerAdapter.OnNewsClickListener listener) {
         this.mListener = listener;
         this.mNewsList = list;
     }
 
-    public void setData(List<Map<String, String>> newsList) {
+    public void setData(List<NewsListItem> newsList) {
         this.mNewsList = newsList;
         notifyDataSetChanged();
     }
@@ -36,12 +35,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        holder.headLine.setText(mNewsList.get(position).get(Constants.HEAD_LINE));
-        holder.dataLine.setText(mNewsList.get(position).get(Constants.DATE_LINE));
-
-        holder.card_view.setTag(mNewsList.get(position).get(Constants.WEB_URL));
-
+        holder.bind(mNewsList.get(position), mListener);
     }
 
     @Override
@@ -49,28 +43,32 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         return mNewsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView headLine;
-        TextView dataLine;
-        CardView card_view;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView headLine;
+        private TextView dataLine;
+        private CardView card_view;
 
         public ViewHolder(View itemView) {
             super(itemView);
             headLine = (TextView) itemView.findViewById(R.id.tv_headline);
             dataLine = (TextView) itemView.findViewById(R.id.tv_dataline);
             card_view = (CardView) itemView.findViewById(R.id.card_view);
+        }
+
+        public void bind(final NewsListItem list, final OnNewsClickListener listener) {
+            headLine.setText(list.getHead());
+            dataLine.setText(list.getDate());
             card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String webUrl = v.getTag().toString();
-                    mListener.onClick(webUrl);
+                    listener.onClick(list.getUrl());
                 }
             });
         }
     }
 
-
     public interface OnNewsClickListener {
         void onClick(String s);
     }
+
 }

@@ -1,12 +1,13 @@
 package com.example.ram1991.creativewebmedianewsfeed.presenters;
 
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsListItem;
+
 import java.util.List;
-import java.util.Map;
 
 public interface NewsPresenter {
     void sendRequest();
 
-    void onNetworkSuccess(List<Map<String, String>> newsList);
+    void onNetworkSuccess(List<NewsListItem> newsList);
 
     void onNetworkFailure();
 }

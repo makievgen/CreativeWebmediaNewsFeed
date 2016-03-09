@@ -1,13 +1,11 @@
 package com.example.ram1991.creativewebmedianewsfeed.interactors.apis;
 
-import com.example.ram1991.creativewebmedianewsfeed.interactors.Constants;
 import com.example.ram1991.creativewebmedianewsfeed.interactors.models.News;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsListItem;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.NewsPresenter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,14 +27,16 @@ public class NewsInteractorImpl implements NewsInteractor, Callback<News> {
     public void onResponse(Call<News> call, Response<News> response) {
         if (response.isSuccess()) {
             int count = response.body().getNewsItem().size();
-            List<Map<String, String>> newsList = new ArrayList<>();
-            Map<String, String> map;
+            List<NewsListItem> newsList = new ArrayList<>();
+            NewsListItem newsListItem;
+
             for (int i = 0; i < count; i++) {
-                map = new HashMap<>();
-                map.put(Constants.HEAD_LINE, response.body().getNewsItem().get(i).getHeadLine());
-                map.put(Constants.DATE_LINE, response.body().getNewsItem().get(i).getDateLine());
-                map.put(Constants.WEB_URL, response.body().getNewsItem().get(i).getWebURL());
-                newsList.add(map);
+                newsListItem = new NewsListItem(response.body().getNewsItem().get(i).getHeadLine(),
+                        response.body().getNewsItem().get(i).getDateLine(),
+                        response.body().getNewsItem().get(i).getWebURL());
+
+                newsList.add(newsListItem);
+
             }
             mNewsPresenter.onNetworkSuccess(newsList);
 
