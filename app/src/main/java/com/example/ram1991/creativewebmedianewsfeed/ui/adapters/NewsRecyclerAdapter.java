@@ -8,21 +8,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ram1991.creativewebmedianewsfeed.R;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsListItem;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsItem;
 
 import java.util.List;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
     private OnNewsClickListener mListener;
-    private List<NewsListItem> mNewsList;
+    private List<NewsItem> mNewsList;
 
 
-    public NewsRecyclerAdapter(List<NewsListItem> list, NewsRecyclerAdapter.OnNewsClickListener listener) {
+    public NewsRecyclerAdapter(List<NewsItem> list, NewsRecyclerAdapter.OnNewsClickListener listener) {
         this.mListener = listener;
         this.mNewsList = list;
     }
 
-    public void setData(List<NewsListItem> newsList) {
+    public void setData(List<NewsItem> newsList) {
         this.mNewsList = newsList;
         notifyDataSetChanged();
     }
@@ -55,13 +55,13 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             card_view = (CardView) itemView.findViewById(R.id.card_view);
         }
 
-        public void bind(final NewsListItem list, final OnNewsClickListener listener) {
-            headLine.setText(list.getHead());
-            dataLine.setText(list.getDate());
+        public void bind(final NewsItem list, final OnNewsClickListener listener) {
+            headLine.setText(list.getHeadLine());
+            dataLine.setText(list.getDateLine());
             card_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onClick(list.getUrl());
+                    listener.onClick(list.getWebURL());
                 }
             });
         }

@@ -1,6 +1,6 @@
 package com.example.ram1991.creativewebmedianewsfeed.views;
 
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsListItem;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsItem;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ public interface NewsViewer {
 
     void startRefresh();
 
-    void showFeedNews(List<NewsListItem> newsList);
+    void showFeedNews(List<NewsItem> newsList);
 }

@@ -1,10 +1,9 @@
 package com.example.ram1991.creativewebmedianewsfeed.interactors.apis;
 
 import com.example.ram1991.creativewebmedianewsfeed.interactors.models.News;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsListItem;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsItem;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.NewsPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,19 +25,9 @@ public class NewsInteractorImpl implements NewsInteractor, Callback<News> {
     @Override
     public void onResponse(Call<News> call, Response<News> response) {
         if (response.isSuccess()) {
-            int count = response.body().getNewsItem().size();
-            List<NewsListItem> newsList = new ArrayList<>();
-            NewsListItem newsListItem;
 
-            for (int i = 0; i < count; i++) {
-                newsListItem = new NewsListItem(response.body().getNewsItem().get(i).getHeadLine(),
-                        response.body().getNewsItem().get(i).getDateLine(),
-                        response.body().getNewsItem().get(i).getWebURL());
-
-                newsList.add(newsListItem);
-
-            }
-            mNewsPresenter.onNetworkSuccess(newsList);
+            List<NewsItem> list = response.body().getNewsItem();
+            mNewsPresenter.onNetworkSuccess(list);
 
         } else {
             mNewsPresenter.onNetworkFailure();

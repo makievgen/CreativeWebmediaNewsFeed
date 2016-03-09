@@ -2,7 +2,7 @@ package com.example.ram1991.creativewebmedianewsfeed.presenters;
 
 import com.example.ram1991.creativewebmedianewsfeed.interactors.apis.NewsInteractor;
 import com.example.ram1991.creativewebmedianewsfeed.interactors.apis.NewsInteractorImpl;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsListItem;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsItem;
 import com.example.ram1991.creativewebmedianewsfeed.views.NewsViewer;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class NewsPresenterImpl implements NewsPresenter {
     }
 
     @Override
-    public void onNetworkSuccess(List<NewsListItem> newsList) {
+    public void onNetworkSuccess(List<NewsItem> newsList) {
         mNewsViewer.showFeedNews(newsList);
     }
 

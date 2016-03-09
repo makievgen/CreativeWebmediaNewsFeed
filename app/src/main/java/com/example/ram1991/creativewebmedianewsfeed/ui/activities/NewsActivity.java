@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.example.ram1991.creativewebmedianewsfeed.R;
 import com.example.ram1991.creativewebmedianewsfeed.interactors.Constants;
-import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsListItem;
+import com.example.ram1991.creativewebmedianewsfeed.interactors.models.NewsItem;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.NewsPresenter;
 import com.example.ram1991.creativewebmedianewsfeed.presenters.NewsPresenterImpl;
 import com.example.ram1991.creativewebmedianewsfeed.ui.adapters.NewsRecyclerAdapter;
@@ -42,7 +42,7 @@ public class NewsActivity extends BaseActivity implements NewsViewer, NewsRecycl
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<NewsListItem> dummyList = new ArrayList<>();
+        List<NewsItem> dummyList = new ArrayList<>();
         mAdapter = new NewsRecyclerAdapter(dummyList, this);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -68,7 +68,7 @@ public class NewsActivity extends BaseActivity implements NewsViewer, NewsRecycl
     }
 
     @Override
-    public void showFeedNews(List<NewsListItem> newsList) {
+    public void showFeedNews(List<NewsItem> newsList) {
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
